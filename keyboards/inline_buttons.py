@@ -7,7 +7,12 @@ async def start_menu_keyboard():
         "Начать анкету 🔥",
         callback_data="start_questionnaire"
     )
+    # ban_users_button = InlineKeyboardButton(
+    #     "Забаненные пользователи 🚫",
+    #     callback_data="ban_users"
+    # )
     markup.add(questionnaire_button)
+    # markup.add(ban_users_button)
     return markup
 
 

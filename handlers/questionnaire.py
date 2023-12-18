@@ -12,6 +12,12 @@ async def start_questionnaire_call(call: types.CallbackQuery):
         reply_markup=await inline_buttons.start_questionnaire_keyboard()
     )
 
+# async def ban_users_call(call: types.CallbackQuery):
+#     await bot.send_message(
+#         chat_id=call.from_user.id,
+#         text="Хороший выбор 👍",
+#     )
+
 async def start_questionnaire_call(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
@@ -57,4 +63,6 @@ def register_questionnaire_handlers(dp: Dispatcher):
                                        lambda call: call.data == "Python")
     dp.register_callback_query_handler(Answer_call,
                                        lambda call: call.data == "Answer")
+    # dp.register_callback_query_handler(ban_users_call,
+    #                                    lambda call: call.data == "ban_users")
 
