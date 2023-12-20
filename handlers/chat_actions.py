@@ -46,6 +46,5 @@ async def chat_messages(message: types.Message):
             )
 
 
-
 def register_chat_actions_handlers(dp: Dispatcher):
     dp.register_message_handler(chat_messages)

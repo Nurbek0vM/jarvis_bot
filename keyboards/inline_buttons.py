@@ -7,15 +7,18 @@ async def start_menu_keyboard():
         "Начать анкету 🔥",
         callback_data="start_questionnaire"
     )
+    registration_button = InlineKeyboardButton(
+        "Регистрация 📝",
+        callback_data="registration"
+    )
     # ban_users_button = InlineKeyboardButton(
     #     "Забаненные пользователи 🚫",
     #     callback_data="ban_users"
     # )
     markup.add(questionnaire_button)
+    markup.add(registration_button)
     # markup.add(ban_users_button)
     return markup
-
-
 
 
 async def start_questionnaire_keyboard():

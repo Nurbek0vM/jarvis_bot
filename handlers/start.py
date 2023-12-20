@@ -28,3 +28,4 @@ async def start_button(message: types.Message):
 
 def register_start_handlers(dp: Dispatcher):
     dp.register_message_handler(start_button, commands=['start'])
+

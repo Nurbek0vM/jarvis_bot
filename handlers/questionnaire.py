@@ -18,12 +18,14 @@ async def start_questionnaire_call(call: types.CallbackQuery):
 #         text="Хороший выбор 👍",
 #     )
 
+
 async def start_questionnaire_call(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Какая направления тебе нравится 🧐",
         reply_markup=await inline_buttons.start_questionnaire_keyboard()
     )
+
 
 async def direction_backend_call(call: types.CallbackQuery):
     await bot.send_message(
@@ -32,6 +34,7 @@ async def direction_backend_call(call: types.CallbackQuery):
         reply_markup=await inline_buttons.direction_backend()
     )
 
+
 async def direction_FrontEnd_call(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
@@ -39,12 +42,14 @@ async def direction_FrontEnd_call(call: types.CallbackQuery):
         reply_markup=await inline_buttons.direction_FrontEnd()
     )
 
+
 async def Python_language_call(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Какие фреймворки ты предпочитаешь?",
         reply_markup=await inline_buttons.What_frameworks_do_you()
     )
+
 
 async def Answer_call(call: types.CallbackQuery):
     await bot.send_message(
