@@ -1,3 +1,5 @@
+import sqlite3
+
 from aiogram import types, Dispatcher
 from config import bot, MEDIA_DESTINATION
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -21,6 +23,14 @@ async def start_registration(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Отправьте мне свое имя, пожалуйста ?"
+    )
+    await RegistrationStates.nickname.set()
+
+
+async def update_profile_call(call: types.CallbackQuery):
+    await bot.send_message(
+        chat_id=call.from_user.id,
+        text='Отправьте мне свое имя, пожалуйста ?'
     )
     await RegistrationStates.nickname.set()
 
@@ -92,7 +102,7 @@ async def load_gender(message: types.Message,
 
 
 async def load_favorite_color(message: types.Message,
-                             state: FSMContext):
+                              state: FSMContext):
     async with state.proxy() as data:
         data['favorite_color'] = message.text
         print(data)
@@ -125,17 +135,40 @@ async def load_photo(message: types.Message,
         destination_dir=MEDIA_DESTINATION
     )
     print(path.name)
+    profile = db.sql_select_profile(
+        tg_id=message.from_user.id
+    )
     async with state.proxy() as data:
-        db.sql_insert_profile(
-            tg_id=message.from_user.id,
-            nickname=data['nickname'],
-            biography=data['biography'],
-            age=data['age'],
-            gender=data['gender'],
-            favorite_color=data['favorite_color'],
-            citizenshipe=data['citizenshipe'],
-            photo=path.name
-        )
+        if not profile:
+            db.sql_insert_profile(
+                tg_id=message.from_user.id,
+                nickname=data['nickname'],
+                biography=data['biography'],
+                age=data['age'],
+                gender=data['gender'],
+                favorite_color=data['favorite_color'],
+                citizenshipe=data['citizenshipe'],
+                photo=path.name
+            )
+            await bot.send_message(
+                chat_id=message.from_user.id,
+                text="Вы успешно зарегистрировались 👍"
+            )
+        elif profile:
+            db.sql_update_profile(
+                nickname=data['nickname'],
+                biography=data['biography'],
+                age=data['age'],
+                gender=data['gender'],
+                favorite_color=data['favorite_color'],
+                citizenshipe=data['citizenshipe'],
+                photo=path.name,
+                tg_id=message.from_user.id
+            )
+            await bot.send_message(
+                chat_id=message.from_user.id,
+                text="Вы успешно зарегистрировались 👍"
+            )
         with open(path.name, 'rb') as photo:
             await bot.send_photo(
                 chat_id=message.from_user.id,
@@ -149,10 +182,6 @@ async def load_photo(message: types.Message,
                     citizenshipe=data['citizenshipe']
                 ),
             )
-        await bot.send_message(
-            chat_id=message.from_user.id,
-            text="Вы успешно зарегистрировались 👍"
-        )
         await state.finish()
 
 
@@ -160,6 +189,10 @@ def registration_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(
         start_registration,
         lambda call: call.data == "registration"
+    )
+    dp.register_callback_query_handler(
+        update_profile_call,
+        lambda call: call.data == "update_profile"
     )
     dp.register_message_handler(
         load_nickname,

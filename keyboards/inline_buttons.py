@@ -11,12 +11,22 @@ async def start_menu_keyboard():
         "Регистрация 📝",
         callback_data="registration"
     )
+    profile_button = InlineKeyboardButton(
+        "Мой профил 👤",
+        callback_data="my_profile"
+    )
+    view_profile_button = InlineKeyboardButton(
+        "Просмотр профилей 👍🏻👎🏻",
+        callback_data="random_profile"
+    )
     # ban_users_button = InlineKeyboardButton(
     #     "Забаненные пользователи 🚫",
     #     callback_data="ban_users"
     # )
     markup.add(questionnaire_button)
     markup.add(registration_button)
+    markup.add(profile_button)
+    markup.add(view_profile_button)
     # markup.add(ban_users_button)
     return markup
 
@@ -34,6 +44,7 @@ async def start_questionnaire_keyboard():
     markup.add(Backend_button)
     markup.add(FrontEnd_button)
     return markup
+
 
 async def direction_backend():
     markup = InlineKeyboardMarkup()
@@ -54,6 +65,7 @@ async def direction_backend():
     markup.add(PHP_button)
     return markup
 
+
 async def What_frameworks_do_you():
     markup = InlineKeyboardMarkup()
     Django_button = InlineKeyboardButton(
@@ -67,6 +79,7 @@ async def What_frameworks_do_you():
     markup.add(Django_button)
     markup.add(Flask_button)
     return markup
+
 
 async def direction_FrontEnd():
     markup = InlineKeyboardMarkup()
@@ -86,3 +99,34 @@ async def direction_FrontEnd():
     markup.add(Angular_button)
     markup.add(Vue_button)
     return markup
+
+
+async def like_dislike_keyboard(owner_tg_id):
+    markup = InlineKeyboardMarkup()
+    python_button = InlineKeyboardButton(
+        "LIKE 👍🏻",
+        callback_data=f"like_{owner_tg_id}"
+    )
+    mojo_button = InlineKeyboardButton(
+        "DISLIKE 👎🏻",
+        callback_data=f"dis_{owner_tg_id}"
+    )
+    markup.add(python_button)
+    markup.add(mojo_button)
+    return markup
+
+
+async def my_profile_keyboard():
+    markup = InlineKeyboardMarkup()
+    python_button = InlineKeyboardButton(
+        "Update 🟢",
+        callback_data=f"update_profile"
+    )
+    mojo_button = InlineKeyboardButton(
+        "Delete ❌",
+        callback_data="delete_profile"
+    )
+    markup.add(python_button)
+    markup.add(mojo_button)
+    return markup
+
