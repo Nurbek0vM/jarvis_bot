@@ -19,6 +19,10 @@ async def start_menu_keyboard():
         "Просмотр профилей 👍🏻👎🏻",
         callback_data="random_profile"
     )
+    reference_menu_button = InlineKeyboardButton(
+        "справочное меню 📄",
+        callback_data="reference_menu"
+    )
     # ban_users_button = InlineKeyboardButton(
     #     "Забаненные пользователи 🚫",
     #     callback_data="ban_users"
@@ -27,6 +31,7 @@ async def start_menu_keyboard():
     markup.add(registration_button)
     markup.add(profile_button)
     markup.add(view_profile_button)
+    markup.add(reference_menu_button)
     # markup.add(ban_users_button)
     return markup
 
@@ -128,5 +133,14 @@ async def my_profile_keyboard():
     )
     markup.add(python_button)
     markup.add(mojo_button)
+    return markup
+
+async def reference_menu_keyboard():
+    markup = InlineKeyboardMarkup()
+    link_button = InlineKeyboardButton(
+        "Link 🟢",
+        callback_data="reference_link"
+    )
+    markup.add(link_button)
     return markup
 
