@@ -23,6 +23,10 @@ async def start_menu_keyboard():
         "справочное меню 📄",
         callback_data="reference_menu"
     )
+    scraper_button = InlineKeyboardButton(
+        "Ссылка на аниме ☯☯",
+        callback_data="scraper_button"
+    )
     # ban_users_button = InlineKeyboardButton(
     #     "Забаненные пользователи 🚫",
     #     callback_data="ban_users"
@@ -32,6 +36,7 @@ async def start_menu_keyboard():
     markup.add(profile_button)
     markup.add(view_profile_button)
     markup.add(reference_menu_button)
+    markup.add(scraper_button)
     # markup.add(ban_users_button)
     return markup
 
